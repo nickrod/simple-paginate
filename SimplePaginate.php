@@ -2,7 +2,7 @@
 
 //
 
-namespace nickrod\simplepaginate;
+//namespace nickrod\simplepaginate;
 
 //
 
@@ -24,9 +24,9 @@ class SimplePaginate
 
   private $canonical_url;
 
-  // total page links displayed
+  // page links offset
 
-  private $total_page_links;
+  private $page_links_offset;
 
   // url params
 
@@ -52,22 +52,23 @@ class SimplePaginate
 
   private $offset;
 
-  // start offset
+  // start page link
 
-  private $start_offset;
+  public $start;
 
-  // end offset
+  // end page link
 
-  private $end_offset;
+  public $end;
 
   // constructor
 
-  public function __construct($total_records, $per_page, $current_page, $canonical_url, $total_page_links = 6, $url_params = '')
+  //public function __construct($total_records, $per_page, $current_page, $canonical_url, $total_page_links = 6, $url_params = '')
+  public function __construct($options = [])
   {
     $this->total_records = $total_records;
     $this->per_page = $per_page;
     $this->canonical_url = $canonical_url;
-    $this->total_page_links = $total_page_links;
+    $this->page_links_offset = $page_links_offset;
     $this->url_params = $url_params;
     $this->total_pages = ceil($this->total_records / $this->per_page);
 
@@ -96,34 +97,26 @@ class SimplePaginate
     $this->db_offset = ($this->current_page - 1) * $this->per_page;
     $this->offset = ($this->current_page - 1) * $this->per_page + 1;
 
-    // calc start offset
+    // start page links
 
-    $half = floor($this->total_page_links / 2);
-
-    //
-
-    if ($this->current_page <= $half || $this->total_pages <= $this->total_page_links)
+    if (($this->current_page - $this->page_links_offset) > 0)
     {
-      $this->start_offset = 1;
-    }
-    elseif ($this->current_page >= ($this->total_pages - $half))
-    {
-      $this->start_offset = $this->total_pages - $this->total_page_links + 1;
+      $this->start = $this->current_page - $this->page_links_offset;
     }
     else
     {
-      $this->start_offset = $this->current_page - $half;
+      $this->start = 1;
     }
 
-    // calc end offset
+    // end page links
 
-    if ($this->total_pages < $this->total_page_links)
+    if (($this->current_page + $this->page_links_offset) < $this->total_pages)
     {
-      $this->end_offset = $this->total_pages;
+      $this->end = $this->current_page + $this->page_links_offset;
     }
     else
     {
-      $this->end_offset = $this->start_offset + $this->total_page_links - 1;
+      $this->end = $this->total_pages;
     }
   }
 
@@ -196,7 +189,7 @@ class SimplePaginate
 
       // page links
 
-      for ($i = $this->start_offset; $i <= $this->end_offset; $i++)
+      for ($i = $this->start; $i <= $this->end; $i++)
       {
         if ($i == $this->current_page)
         {
