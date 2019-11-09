@@ -54,15 +54,26 @@ class SimplePaginate
 
   // start page link
 
-  public $start;
+  private $start;
 
   // end page link
 
-  public $end;
+  private $end;
+
+  // ul class
+
+  private $ul_class = 'pagination';
+
+  // li class
+
+  private $li_class = 'page-item';
+
+  // a class
+
+  private $a_class = 'page-link';
 
   // constructor
 
-  //public function __construct($total_records, $per_page, $current_page, $canonical_url, $total_page_links = 6, $url_params = '')
   public function __construct($options = [])
   {
     if (!empty($options['total_records']) && is_int($options['total_records']))
@@ -96,6 +107,27 @@ class SimplePaginate
     if (!empty($options['url_params']) && is_string($options['url_params']))
     {
       $this->url_params = filter_var($options['url_params'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+
+    //
+
+    if (!empty($options['ul_class']) && is_string($options['ul_class']))
+    {
+      $this->ul_class = filter_var($options['ul_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+
+    //
+
+    if (!empty($options['li_class']) && is_string($options['li_class']))
+    {
+      $this->li_class = filter_var($options['li_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+
+    //
+
+    if (!empty($options['a_class']) && is_string($options['a_class']))
+    {
+      $this->a_class = filter_var($options['a_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     // calculate total pages
@@ -196,8 +228,7 @@ class SimplePaginate
 
   // get the paging links
 
-  //public function getLinks($ul_class = "", $li_class = "", $a_class = "")
-  public function getLinks($options = [])
+  public function getLinks()
   {
     $links = '';
 
@@ -205,20 +236,14 @@ class SimplePaginate
 
     if ($this->total_pages > 1)
     {
-      $ul_class = (!empty($ul_class)) ? ("class='" . $ul_class . "'") : "";
-      $li_class = (!empty($li_class)) ? ("class='" . $li_class . "'") : "";
-      $a_class = (!empty($a_class)) ? ("class='" . $a_class . "'") : "";
-
-      //
-
-      $links .= "<ul $ul_class>";
+      $links .= "<ul class='{$this->ul_class}'>";
 
       // show prev/first links
 
       if ($this->current_page > 1)
       {
-        $links .= "<li $li_class><a $a_class href='" . $this->canonical_url . "?page=" . $this->previous_page . $this->url_params . "'>Previous</a></li>";
-        $links .= "<li $li_class><a $a_class href='" . $this->canonical_url . "?page=1" . $this->url_params . "'>First</a></li>";
+        $links .= "<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->previous_page . $this->url_params . "'>Previous</a></li>";
+        $links .= "<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=1" . $this->url_params . "'>First</a></li>";
       }
 
       // page links
@@ -227,12 +252,11 @@ class SimplePaginate
       {
         if ($i == $this->current_page)
         {
-          $li_class = (!empty($li_class)) ? ("class='" . $li_class . " active'") : "class='active'";
-          $links .= "<li $li_class><b>$i</b></li>";
+          $links .= "<li class='{$this->li_class} active'><b>$i</b></li>";
         }
         else
         {
-          $links .= "<li $li_class><a $a_class href='" . $this->canonical_url . "?page=" . $i . $this->url_params . "'>" . $i . "</a></li>";
+          $links .= "<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $i . $this->url_params . "'>" . $i . "</a></li>";
         }
       }
 
@@ -240,8 +264,8 @@ class SimplePaginate
 
       if ($this->current_page < $this->total_pages)
       {
-        $links .= "<li $li_class><a $a_class href='" . $this->canonical_url . "?page=" . $this->total_pages . $this->url_params . "'>Last</a></li>";
-        $links .= "<li $li_class><a $a_class href='" . $this->canonical_url . "?page=" . $this->next_page . $this->url_params . "'>Next</a></li>";
+        $links .= "<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->total_pages . $this->url_params . "'>Last</a></li>";
+        $links .= "<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->next_page . $this->url_params . "'>Next</a></li>";
       }
 
       //
