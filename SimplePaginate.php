@@ -67,9 +67,9 @@ class SimplePaginate
   {
     $this->total_records = $total_records;
     $this->per_page = $per_page;
-    $this->canonical_url = $canonical_url;
+    $this->canonical_url = addslashes($canonical_url);
     $this->page_links_offset = $page_links_offset;
-    $this->url_params = $url_params;
+    $this->url_params = addslashes($url_params);
     $this->total_pages = ceil($this->total_records / $this->per_page);
 
     // set current page, do some basic validation
@@ -87,7 +87,7 @@ class SimplePaginate
       $this->current_page = $current_page;
     }
 
-    // set prev and next pages
+    // set previous and next pages
 
     $this->previous_page = $this->current_page - 1;
     $this->next_page = $this->current_page + 1;
@@ -134,9 +134,9 @@ class SimplePaginate
     return $this->db_offset;
   }
 
-  // get canonical links
+  // get paging meta tags
 
-  public function getLinks()
+  public function getMetaTags()
   {
     $tags = '';
 
@@ -161,9 +161,10 @@ class SimplePaginate
     return $tags;
   }
 
-  // get the paging html
+  // get the paging links
 
-  public function getTags($ul_class = "", $li_class = "", $a_class = "")
+  //public function getLinks($ul_class = "", $li_class = "", $a_class = "")
+  public function getLinks($options = [])
   {
     $tags = '';
 
