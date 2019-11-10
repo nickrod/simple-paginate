@@ -10,15 +10,15 @@ class SimplePaginate
 {
   // total records
 
-  private $total_records;
+  private $total_records = 100;
 
   // number of records per page
 
-  private $per_page;
+  private $per_page = 20;
 
   // current page
 
-  private $current_page;
+  private $current_page = 1;
 
   // canonical url
 
@@ -30,7 +30,7 @@ class SimplePaginate
 
   // url params
 
-  private $url_params;
+  private $url_params = '';
 
   // previous page
 
@@ -76,58 +76,58 @@ class SimplePaginate
 
   public function __construct($options = [])
   {
-    if (!empty($options['total_records']) && is_int($options['total_records']))
+    if (isset($options['total_records']) && is_int($options['total_records']))
     {
       $this->total_records = $options['total_records'];
     }
 
     //
 
-    if (!empty($options['per_page']) && is_int($options['per_page']))
+    if (isset($options['per_page']) && is_int($options['per_page']))
     {
       $this->per_page = $options['per_page'];
     }
 
     //
 
-    if (!empty($options['canonical_url']) && is_string($options['canonical_url']) && filter_var($options['canonical_url'], FILTER_VALIDATE_URL))
+    if (isset($options['canonical_url']) && is_string($options['canonical_url']))
     {
       $this->canonical_url = addslashes($options['canonical_url']);
     }
 
     //
 
-    if (!empty($options['page_links_offset']) && is_int($options['page_links_offset']))
+    if (isset($options['page_links_offset']) && is_int($options['page_links_offset']))
     {
       $this->page_links_offset = $options['page_links_offset'];
     }
 
     //
 
-    if (!empty($options['url_params']) && is_string($options['url_params']))
+    if (isset($options['url_params']) && is_string($options['url_params']))
     {
-      $this->url_params = filter_var($options['url_params'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->url_params = '&' . addslashes($options['url_params']);
     }
 
     //
 
-    if (!empty($options['ul_class']) && is_string($options['ul_class']))
+    if (isset($options['ul_class']) && is_string($options['ul_class']))
     {
-      $this->ul_class = filter_var($options['ul_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->ul_class = addslashes($options['ul_class']);
     }
 
     //
 
-    if (!empty($options['li_class']) && is_string($options['li_class']))
+    if (isset($options['li_class']) && is_string($options['li_class']))
     {
-      $this->li_class = filter_var($options['li_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->li_class = addslashes($options['li_class']);
     }
 
     //
 
-    if (!empty($options['a_class']) && is_string($options['a_class']))
+    if (isset($options['a_class']) && is_string($options['a_class']))
     {
-      $this->a_class = filter_var($options['a_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->a_class = addslashes($options['a_class']);
     }
 
     // calculate total pages
@@ -136,7 +136,7 @@ class SimplePaginate
 
     // set current page, do some basic validation
 
-    if (!empty($options['current_page']) && is_int($options['current_page']))
+    if (isset($options['current_page']) && is_int($options['current_page']))
     {
       if ($options['current_page'] < 1)
       {
