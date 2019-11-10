@@ -2,7 +2,7 @@
 
 //
 
-//namespace nickrod\simplepaginate;
+namespace nickrod\simplepaginate;
 
 //
 
@@ -92,7 +92,7 @@ class SimplePaginate
 
     if (isset($options['canonical_url']) && is_string($options['canonical_url']))
     {
-      $this->canonical_url = addslashes($options['canonical_url']);
+      $this->canonical_url = filter_var($options['canonical_url'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     //
@@ -106,28 +106,28 @@ class SimplePaginate
 
     if (isset($options['url_params']) && is_string($options['url_params']))
     {
-      $this->url_params = '&' . addslashes($options['url_params']);
+      $this->url_params = filter_var('&' . $options['url_params'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     //
 
     if (isset($options['ul_class']) && is_string($options['ul_class']))
     {
-      $this->ul_class = addslashes($options['ul_class']);
+      $this->ul_class = filter_var($options['ul_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     //
 
     if (isset($options['li_class']) && is_string($options['li_class']))
     {
-      $this->li_class = addslashes($options['li_class']);
+      $this->li_class = filter_var($options['li_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     //
 
     if (isset($options['a_class']) && is_string($options['a_class']))
     {
-      $this->a_class = addslashes($options['a_class']);
+      $this->a_class = filter_var($options['a_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     // calculate total pages
