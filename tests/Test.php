@@ -2,7 +2,7 @@
 
 //
 
-namespace nickrod\simplepaginate\test;
+namespace nickrod\simplepaginate\tests;
 
 //
 
