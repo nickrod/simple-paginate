@@ -1,0 +1,13 @@
+{
+    "name": "nickrod/simplepaginate",
+    "description": "Simple pagination library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nickrod",
+            "email": "nickrod@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
