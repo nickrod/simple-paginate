@@ -14,8 +14,7 @@
         "php": "^7.0"
     },
     "autoload": {
-        "psr-4": { "simplepaginate\\": "src/" },
-        "exclude-from-classmap": ["/tests/"]
+        "psr-4": { "simplepaginate\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": { "simplepaginate\\tests\\": "tests/" }
