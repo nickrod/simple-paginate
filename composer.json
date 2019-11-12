@@ -1,6 +1,7 @@
 {
     "name": "nickrod/simplepaginate",
     "description": "Simple pagination library",
+    "keywords": ["paging", "paginate", "pagination"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -9,5 +10,14 @@
             "email": "nickrod@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": { "simplepaginate\\": "src/" },
+        "exclude-from-classmap": ["/tests/"]
+    },
+    "autoload-dev": {
+        "psr-4": { "simplepaginate\\tests\\": "tests/" }
+    }
 }
