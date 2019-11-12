@@ -1,7 +1,7 @@
 {
     "name": "nickrod/simplepaginate",
     "description": "Simple pagination library",
-    "keywords": ["paging", "paginate", "pagination"],
+    "keywords": ["pager", "paging", "paginate", "pagination"],
     "type": "library",
     "license": "MIT",
     "authors": [
