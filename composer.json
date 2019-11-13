@@ -1,5 +1,5 @@
 {
-    "name": "nickrod/simplepaginate",
+    "name": "simplepaginate/simplepaginate",
     "description": "Simple pagination library",
     "keywords": ["pager", "paging", "paginate", "pagination"],
     "type": "library",
@@ -14,9 +14,9 @@
         "php": "^7.0"
     },
     "autoload": {
-        "psr-4": { "SimplePaginate\\": "src/" }
+        "psr-4": { "simplepaginate\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "SimplePaginate\\tests\\": "tests/" }
+        "psr-4": { "simplepaginate\\tests\\": "tests/" }
     }
 }

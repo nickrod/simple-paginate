@@ -2,11 +2,11 @@
 
 //
 
-namespace nickrod\SimplePaginate\tests;
+namespace simplepaginate\tests;
 
 //
 
-use nickrod\SimplePaginate\SimplePaginate;
+use simplepaginate\SimplePaginate;
 
 //
 

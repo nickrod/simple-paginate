@@ -2,7 +2,7 @@
 
 //
 
-namespace nickrod\SimplePaginate;
+namespace simplepaginate;
 
 //
 
