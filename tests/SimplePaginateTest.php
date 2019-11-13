@@ -2,11 +2,16 @@
 
 //
 
-namespace nickrod\simplepaginate\tests;
+namespace nickrod\SimplePaginate\tests;
 
 //
 
-use nickrod\simplepaginate;
+use nickrod\SimplePaginate\SimplePaginate;
+
+//
+
+$page = new SimplePaginate();
+echo $page->getLinks();
 
 //
 
