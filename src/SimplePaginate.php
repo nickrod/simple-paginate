@@ -76,35 +76,35 @@ class SimplePaginate
 
   public function __construct($options = [])
   {
-    if (isset($options['total_records']) && is_int($options['total_records']))
+    if (!empty($options['total_records']) && is_int($options['total_records']))
     {
       $this->total_records = $options['total_records'];
     }
 
     //
 
-    if (isset($options['per_page']) && is_int($options['per_page']))
+    if (!empty($options['per_page']) && is_int($options['per_page']))
     {
       $this->per_page = $options['per_page'];
     }
 
     //
 
-    if (isset($options['canonical_url']) && is_string($options['canonical_url']))
+    if (!empty($options['canonical_url']) && is_string($options['canonical_url']))
     {
       $this->canonical_url = filter_var($options['canonical_url'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     //
 
-    if (isset($options['page_links_offset']) && is_int($options['page_links_offset']))
+    if (!empty($options['page_links_offset']) && is_int($options['page_links_offset']))
     {
       $this->page_links_offset = $options['page_links_offset'];
     }
 
     //
 
-    if (isset($options['url_params']) && is_string($options['url_params']))
+    if (!empty($options['url_params']) && is_string($options['url_params']))
     {
       $this->url_params = filter_var('&' . $options['url_params'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
