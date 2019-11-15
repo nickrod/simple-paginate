@@ -76,14 +76,14 @@ class SimplePaginate
 
   public function __construct($options = [])
   {
-    if (!empty($options['total_records']) && is_int($options['total_records']))
+    if (!empty($options['total_records']) && is_int($options['total_records']) && $options['total_records'] > 0)
     {
       $this->total_records = $options['total_records'];
     }
 
     //
 
-    if (!empty($options['per_page']) && is_int($options['per_page']))
+    if (!empty($options['per_page']) && is_int($options['per_page']) && $options['per_page'] > 0)
     {
       $this->per_page = $options['per_page'];
     }
@@ -97,7 +97,7 @@ class SimplePaginate
 
     //
 
-    if (!empty($options['page_links_offset']) && is_int($options['page_links_offset']))
+    if (!empty($options['page_links_offset']) && is_int($options['page_links_offset']) && $options['page_links_offset'] > 0 && $options['page_links_offset'] < 100)
     {
       $this->page_links_offset = $options['page_links_offset'];
     }
