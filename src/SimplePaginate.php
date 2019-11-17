@@ -40,7 +40,7 @@ class SimplePaginate
 
   private $next_page;
 
-  // total number of pages needed
+  // total number of pages
 
   private $total_pages = 10;
 
@@ -287,7 +287,7 @@ class SimplePaginate
     }
     else
     {
-      $this->canonical_url = filter_var($canonical_url, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->canonical_url = filter_var(strtok($canonical_url, '?'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
   }
 
