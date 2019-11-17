@@ -10,5 +10,5 @@ require __DIR__ . '/../vendor/autoload.php';
 
 //
 
-$page = new SimplePaginate(['a_class' => '']);
+$page = new SimplePaginate();
 echo $page->getLinks();

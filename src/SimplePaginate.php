@@ -14,7 +14,7 @@ class SimplePaginate
 
   // number of records per page
 
-  private $per_page = 20;
+  private $per_page = 10;
 
   // current page
 
@@ -42,7 +42,7 @@ class SimplePaginate
 
   // total number of pages needed
 
-  private $total_pages;
+  private $total_pages = 10;
 
   // db offset
 
@@ -76,112 +76,69 @@ class SimplePaginate
 
   public function __construct($options = [])
   {
-    if (!empty($options['total_records']) && is_int($options['total_records']) && $options['total_records'] > 0)
+    if (!empty($options['total_records']))
     {
-      $this->total_records = $options['total_records'];
+      $this->setTotalRecords($options['total_records']);
     }
 
     //
 
-    if (!empty($options['per_page']) && is_int($options['per_page']) && $options['per_page'] > 0)
+    if (!empty($options['per_page']))
     {
-      $this->per_page = $options['per_page'];
+      $this->setPerPage($options['per_page']);
     }
 
     //
 
-    if (!empty($options['canonical_url']) && is_string($options['canonical_url']))
+    if (!empty($options['canonical_url']))
     {
-      $this->canonical_url = filter_var($options['canonical_url'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->setCanonicalUrl($options['canonical_url']);
     }
 
     //
 
-    if (!empty($options['page_links_offset']) && is_int($options['page_links_offset']) && $options['page_links_offset'] > 0 && $options['page_links_offset'] < 100)
+    if (!empty($options['page_links_offset']))
     {
-      $this->page_links_offset = $options['page_links_offset'];
+      $this->setPageLinksOffset($options['page_links_offset']);
     }
 
-    //
+    // set current page
 
-    if (!empty($options['url_params']) && is_string($options['url_params']))
+    if (!empty($options['current_page']))
     {
-      $this->url_params = filter_var('&' . $options['url_params'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    //
-
-    if (isset($options['ul_class']) && is_string($options['ul_class']))
-    {
-      $this->ul_class = filter_var($options['ul_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    //
-
-    if (isset($options['li_class']) && is_string($options['li_class']))
-    {
-      $this->li_class = filter_var($options['li_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    //
-
-    if (isset($options['a_class']) && is_string($options['a_class']))
-    {
-      $this->a_class = filter_var($options['a_class'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
-
-    // calculate total pages
-
-    $this->total_pages = ceil($this->total_records / $this->per_page);
-
-    // set current page, do some basic validation
-
-    if (isset($options['current_page']) && is_int($options['current_page']))
-    {
-      if ($options['current_page'] < 1)
-      {
-        $this->current_page = 1;
-      }
-      elseif ($options['current_page'] > $this->total_pages && $this->total_pages > 0)
-      {
-        $this->current_page = $this->total_pages;
-      }
-      else
-      {
-        $this->current_page = $options['current_page'];
-      }
-    }
-
-    // set previous and next pages
-
-    $this->previous_page = $this->current_page - 1;
-    $this->next_page = $this->current_page + 1;
-
-    // set db and page offset 
-
-    $this->db_offset = ($this->current_page - 1) * $this->per_page;
-    $this->offset = ($this->current_page - 1) * $this->per_page + 1;
-
-    // start page links
-
-    if (($this->current_page - $this->page_links_offset) > 0)
-    {
-      $this->start = $this->current_page - $this->page_links_offset;
+      $this->setCurrentPage($options['current_page']);
     }
     else
     {
-      $this->start = 1;
+      $this->calculate();
     }
 
-    // end page links
+    //
 
-    if (($this->current_page + $this->page_links_offset) < $this->total_pages)
+    if (!empty($options['url_params']))
     {
-      $this->end = $this->current_page + $this->page_links_offset;
+      $this->setUrlParams($options['url_params']);
     }
-    else
+
+    //
+
+    if (isset($options['ul_class']))
     {
-      $this->end = $this->total_pages;
+      $this->setUlClass($options['ul_class']);
+    }
+
+    //
+
+    if (isset($options['li_class']))
+    {
+      $this->setLiClass($options['li_class']);
+    }
+
+    // set the a class 
+
+    if (isset($options['a_class']))
+    {
+      $this->setAClass($options['a_class']);
     }
   }
 
@@ -276,5 +233,245 @@ class SimplePaginate
     //
 
     return $links;
+  }
+
+  // setters
+
+  public function setTotalRecords($total_records)
+  {
+    if (!is_int($total_records))
+    {
+      throw new InvalidArgumentException("'total_records' must be an integer");
+    }
+    elseif ($total_records < 1)
+    {
+      throw new RangeException("'total_records' must be greater than zero");
+    }
+    else
+    {
+      $this->total_records = $total_records;
+      $this->setTotalPages();
+    }
+  }
+
+  //
+
+  public function setPerPage($per_page)
+  {
+    if (!is_int($per_page))
+    {
+      throw new InvalidArgumentException("'per_page' must be an integer");
+    }
+    elseif ($per_page < 1)
+    {
+      throw new RangeException("'per_page' must be greater than zero");
+    }
+    else
+    {
+      $this->per_page = $per_page;
+      $this->setTotalPages();
+    }
+  }
+
+  //
+
+  public function setCanonicalUrl($canonical_url)
+  {
+    if (!is_string($canonical_url))
+    {
+      throw new InvalidArgumentException("'canonical_url' must be a string");
+    }
+    elseif (!filter_var($canonical_url, FILTER_VALIDATE_URL))
+    {
+      throw new InvalidArgumentException("'canonical_url' must be a valid url");
+    }
+    else
+    {
+      $this->canonical_url = filter_var($canonical_url, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+  }
+
+  //
+
+  public function setPageLinksOffset($page_links_offset)
+  {
+    if (!is_int($page_links_offset))
+    {
+      throw new InvalidArgumentException("'page_links_offset' must be an integer");
+    }
+    elseif ($page_links_offset < 1 || $page_links_offset > 50)
+    {
+      throw new RangeException("'page_links_offset' must be greater than zero and less than 50");
+    }
+    else
+    {
+      $this->page_links_offset = $page_links_offset;
+    }
+  }
+
+  //
+
+  public function setUrlParams($url_params)
+  {
+    if (!is_array($url_params))
+    {
+      throw new InvalidArgumentException("'url_params' must be an array");
+    }
+    else
+    {
+      unset($url_params['page']);
+      $this->url_params = filter_var('&' . http_build_query($url_params), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+  }
+
+  //
+
+  public function setUlClass($ul_class)
+  {
+    if (!is_string($ul_class))
+    {
+      throw new InvalidArgumentException("'ul_class' must be a string");
+    }
+    else
+    {
+      $this->ul_class = filter_var($ul_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+  }
+
+  //
+
+  public function setLiClass($li_class)
+  {
+    if (!is_string($li_class))
+    {
+      throw new InvalidArgumentException("'li_class' must be a string");
+    }
+    else
+    {
+      $this->li_class = filter_var($li_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+  }
+
+  //
+
+  public function setAClass($a_class)
+  {
+    if (!is_string($a_class))
+    {
+      throw new InvalidArgumentException("'a_class' must be a string");
+    }
+    else
+    {
+      $this->a_class = filter_var($a_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+  }
+
+  //
+
+  public function setCurrentPage($current_page)
+  {
+    if (!is_int($current_page))
+    {
+      throw new InvalidArgumentException("'current_page' must be an integer");
+    }
+    elseif ($current_page < 1)
+    {
+      throw new RangeException("'current_page' must be greater than zero");
+    }
+    elseif ($current_page > $this->total_pages)
+    {
+      throw new RangeException("'current_page' cannot be greater than 'total_pages'");
+    }
+    else
+    {
+      $this->current_page = $current_page;
+    }
+
+    //
+
+    $this->calculate();
+  }
+
+  //
+
+  private function calculate()
+  {
+    // set previous and next pages
+
+    $this->setPreviousPage();
+    $this->setNextPage();
+
+    // set db and page offset 
+
+    $this->setDbOffset();
+    $this->setOffset();
+
+    // set start and end page links
+
+    $this->setStart();
+    $this->setEnd();
+  }
+
+  //
+
+  private function setTotalPages()
+  {
+    $this->total_pages = ceil($this->total_records / $this->per_page);
+  }
+
+  //
+
+  private function setPreviousPage()
+  {
+    $this->previous_page = $this->current_page - 1;
+  }
+
+  //
+
+  private function setNextPage()
+  {
+    $this->next_page = $this->current_page + 1;
+  }
+
+  //
+
+  private function setDbOffset()
+  {
+    $this->db_offset = ($this->current_page - 1) * $this->per_page;
+  }
+
+  //
+
+  private function setOffset()
+  {
+    $this->offset = ($this->current_page - 1) * $this->per_page + 1;
+  }
+
+  //
+
+  private function setStart()
+  {
+    if (($this->current_page - $this->page_links_offset) > 0)
+    {
+      $this->start = $this->current_page - $this->page_links_offset;
+    }
+    else
+    {
+      $this->start = 1;
+    }
+  }
+
+  //
+
+  private function setEnd()
+  {
+    if (($this->current_page + $this->page_links_offset) < $this->total_pages)
+    {
+      $this->end = $this->current_page + $this->page_links_offset;
+    }
+    else
+    {
+      $this->end = $this->total_pages;
+    }
   }
 }
