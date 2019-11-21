@@ -199,8 +199,8 @@ class SimplePaginate
 
       if ($this->current_page > 1)
       {
-        $links .= "  <li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->previous_page . $this->url_params . "'>Previous</a></li>\n";
-        $links .= "  <li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=1" . $this->url_params . "'>First</a></li>\n";
+        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->previous_page . $this->url_params . "'>Previous</a></li>\n";
+        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=1" . $this->url_params . "'>First</a></li>\n";
       }
 
       // page links
@@ -209,11 +209,11 @@ class SimplePaginate
       {
         if ($i == $this->current_page)
         {
-          $links .= "  <li class='{$this->li_class} active'><b>$i</b></li>\n";
+          $links .= "\t<li class='{$this->li_class} active'><b>$i</b></li>\n";
         }
         else
         {
-          $links .= "  <li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $i . $this->url_params . "'>" . $i . "</a></li>\n";
+          $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $i . $this->url_params . "'>" . $i . "</a></li>\n";
         }
       }
 
@@ -221,8 +221,8 @@ class SimplePaginate
 
       if ($this->current_page < $this->total_pages)
       {
-        $links .= "  <li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->total_pages . $this->url_params . "'>Last</a></li>\n";
-        $links .= "  <li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->next_page . $this->url_params . "'>Next</a></li>\n";
+        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->total_pages . $this->url_params . "'>Last</a></li>\n";
+        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->next_page . $this->url_params . "'>Next</a></li>\n";
       }
 
       //
@@ -241,11 +241,11 @@ class SimplePaginate
   {
     if (!is_int($total_records))
     {
-      throw new InvalidArgumentException("'total_records' must be an integer");
+      throw new \InvalidArgumentException("'total_records' must be an integer");
     }
     elseif ($total_records < 1)
     {
-      throw new RangeException("'total_records' must be greater than zero");
+      throw new \RangeException("'total_records' must be greater than zero");
     }
     else
     {
@@ -260,11 +260,11 @@ class SimplePaginate
   {
     if (!is_int($per_page))
     {
-      throw new InvalidArgumentException("'per_page' must be an integer");
+      throw new \InvalidArgumentException("'per_page' must be an integer");
     }
     elseif ($per_page < 1)
     {
-      throw new RangeException("'per_page' must be greater than zero");
+      throw new \RangeException("'per_page' must be greater than zero");
     }
     else
     {
@@ -279,11 +279,11 @@ class SimplePaginate
   {
     if (!is_string($canonical_url))
     {
-      throw new InvalidArgumentException("'canonical_url' must be a string");
+      throw new \InvalidArgumentException("'canonical_url' must be a string");
     }
     elseif (!filter_var($canonical_url, FILTER_VALIDATE_URL))
     {
-      throw new InvalidArgumentException("'canonical_url' must be a valid url");
+      throw new \InvalidArgumentException("'canonical_url' must be a valid url");
     }
     else
     {
@@ -297,11 +297,11 @@ class SimplePaginate
   {
     if (!is_int($page_links_offset))
     {
-      throw new InvalidArgumentException("'page_links_offset' must be an integer");
+      throw new \InvalidArgumentException("'page_links_offset' must be an integer");
     }
     elseif ($page_links_offset < 1 || $page_links_offset > 50)
     {
-      throw new RangeException("'page_links_offset' must be greater than zero and less than 50");
+      throw new \RangeException("'page_links_offset' must be greater than zero and less than 50");
     }
     else
     {
@@ -315,7 +315,7 @@ class SimplePaginate
   {
     if (!is_array($url_params))
     {
-      throw new InvalidArgumentException("'url_params' must be an array");
+      throw new \InvalidArgumentException("'url_params' must be an array");
     }
     else
     {
@@ -330,7 +330,7 @@ class SimplePaginate
   {
     if (!is_string($ul_class))
     {
-      throw new InvalidArgumentException("'ul_class' must be a string");
+      throw new \InvalidArgumentException("'ul_class' must be a string");
     }
     else
     {
@@ -344,7 +344,7 @@ class SimplePaginate
   {
     if (!is_string($li_class))
     {
-      throw new InvalidArgumentException("'li_class' must be a string");
+      throw new \InvalidArgumentException("'li_class' must be a string");
     }
     else
     {
@@ -358,7 +358,7 @@ class SimplePaginate
   {
     if (!is_string($a_class))
     {
-      throw new InvalidArgumentException("'a_class' must be a string");
+      throw new \InvalidArgumentException("'a_class' must be a string");
     }
     else
     {
@@ -372,15 +372,15 @@ class SimplePaginate
   {
     if (!is_int($current_page))
     {
-      throw new InvalidArgumentException("'current_page' must be an integer");
+      throw new \InvalidArgumentException("'current_page' must be an integer");
     }
     elseif ($current_page < 1)
     {
-      throw new RangeException("'current_page' must be greater than zero");
+      throw new \RangeException("'current_page' must be greater than zero");
     }
     elseif ($current_page > $this->total_pages)
     {
-      throw new RangeException("'current_page' cannot be greater than 'total_pages'");
+      throw new \RangeException("'current_page' cannot be greater than 'total_pages'");
     }
     else
     {
