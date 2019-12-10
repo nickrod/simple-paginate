@@ -28,25 +28,43 @@ $page = new SimplePaginate([
   'a_class' => ''
 ]);
 
-//
+?>
 
-echo $page->getMetaTags();
-echo $page->getLinks();
+<html>
+  <head>
+    <?=$page->getMetaTags();?>
+  </head>
+  <body>
+    <?=$page->getLinks();?>
+  </body>
+</html>
 
-//
+<?php
 
 $page->setCurrentPage(2);
 
-//
+?>
 
-echo $page->getMetaTags();
-echo $page->getLinks();
+<html>
+  <head>
+    <?=$page->getMetaTags();?>
+  </head>
+  <body>
+    <?=$page->getLinks();?>
+  </body>
+</html>
 
-//
+<?php
 
 $page->setCurrentPage(3);
 
-//
+?>
 
-echo $page->getMetaTags();
-echo $page->getLinks();
+<html>
+  <head>
+    <?=$page->getMetaTags();?>
+  </head>
+  <body>
+    <?=$page->getLinks();?>
+  </body>
+</html>

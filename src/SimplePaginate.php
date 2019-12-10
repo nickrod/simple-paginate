@@ -2,6 +2,10 @@
 
 //
 
+declare(strict_types=1);
+
+//
+
 namespace simplepaginate;
 
 //
@@ -74,37 +78,37 @@ class SimplePaginate
 
   // constructor
 
-  public function __construct($options = [])
+  public function __construct(array $options = [])
   {
-    if (!empty($options['total_records']))
+    if (isset($options['total_records']))
     {
       $this->setTotalRecords($options['total_records']);
     }
 
     //
 
-    if (!empty($options['per_page']))
+    if (isset($options['per_page']))
     {
       $this->setPerPage($options['per_page']);
     }
 
     //
 
-    if (!empty($options['canonical_url']))
+    if (isset($options['canonical_url']))
     {
       $this->setCanonicalUrl($options['canonical_url']);
     }
 
     //
 
-    if (!empty($options['page_links_offset']))
+    if (isset($options['page_links_offset']))
     {
       $this->setPageLinksOffset($options['page_links_offset']);
     }
 
     // set current page
 
-    if (!empty($options['current_page']))
+    if (isset($options['current_page']))
     {
       $this->setCurrentPage($options['current_page']);
     }
@@ -115,7 +119,7 @@ class SimplePaginate
 
     //
 
-    if (!empty($options['url_params']))
+    if (isset($options['url_params']))
     {
       $this->setUrlParams($options['url_params']);
     }
@@ -134,7 +138,7 @@ class SimplePaginate
       $this->setLiClass($options['li_class']);
     }
 
-    // set the a class 
+    //
 
     if (isset($options['a_class']))
     {
@@ -144,21 +148,21 @@ class SimplePaginate
 
   // get offset page links
 
-  public function getOffset()
+  public function getOffset(): int
   {
     return $this->offset;
   }
 
   // get offset for db limit
 
-  public function getDbOffset()
+  public function getDbOffset(): int
   {
     return $this->db_offset;
   }
 
   // get paging meta tags
 
-  public function getMetaTags()
+  public function getMetaTags(): string
   {
     $tags = '';
 
@@ -185,7 +189,7 @@ class SimplePaginate
 
   // get the paging links
 
-  public function getLinks()
+  public function getLinks(): string
   {
     $links = '';
 
@@ -237,13 +241,9 @@ class SimplePaginate
 
   // setters
 
-  public function setTotalRecords($total_records)
+  public function setTotalRecords(int $total_records): void
   {
-    if (!is_int($total_records))
-    {
-      throw new \InvalidArgumentException("'total_records' must be an integer");
-    }
-    elseif ($total_records < 1)
+    if ($total_records < 1)
     {
       throw new \RangeException("'total_records' must be greater than zero");
     }
@@ -256,13 +256,9 @@ class SimplePaginate
 
   //
 
-  public function setPerPage($per_page)
+  public function setPerPage(int $per_page): void
   {
-    if (!is_int($per_page))
-    {
-      throw new \InvalidArgumentException("'per_page' must be an integer");
-    }
-    elseif ($per_page < 1)
+    if ($per_page < 1)
     {
       throw new \RangeException("'per_page' must be greater than zero");
     }
@@ -275,13 +271,9 @@ class SimplePaginate
 
   //
 
-  public function setCanonicalUrl($canonical_url)
+  public function setCanonicalUrl(string $canonical_url): void
   {
-    if (!is_string($canonical_url))
-    {
-      throw new \InvalidArgumentException("'canonical_url' must be a string");
-    }
-    elseif (!filter_var($canonical_url, FILTER_VALIDATE_URL))
+    if (!filter_var($canonical_url, FILTER_VALIDATE_URL))
     {
       throw new \InvalidArgumentException("'canonical_url' must be a valid url");
     }
@@ -293,13 +285,9 @@ class SimplePaginate
 
   //
 
-  public function setPageLinksOffset($page_links_offset)
+  public function setPageLinksOffset(int $page_links_offset): void
   {
-    if (!is_int($page_links_offset))
-    {
-      throw new \InvalidArgumentException("'page_links_offset' must be an integer");
-    }
-    elseif ($page_links_offset < 1 || $page_links_offset > 50)
+    if ($page_links_offset < 1 || $page_links_offset > 50)
     {
       throw new \RangeException("'page_links_offset' must be greater than zero and less than 50");
     }
@@ -311,70 +299,38 @@ class SimplePaginate
 
   //
 
-  public function setUrlParams($url_params)
+  public function setUrlParams(array $url_params): void
   {
-    if (!is_array($url_params))
-    {
-      throw new \InvalidArgumentException("'url_params' must be an array");
-    }
-    else
-    {
-      unset($url_params['page']);
-      $this->url_params = filter_var('&' . http_build_query($url_params), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
+    unset($url_params['page']);
+    $this->url_params = filter_var('&' . http_build_query($url_params), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   }
 
   //
 
-  public function setUlClass($ul_class)
+  public function setUlClass(string $ul_class): void
   {
-    if (!is_string($ul_class))
-    {
-      throw new \InvalidArgumentException("'ul_class' must be a string");
-    }
-    else
-    {
-      $this->ul_class = filter_var($ul_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
+    $this->ul_class = filter_var($ul_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   }
 
   //
 
-  public function setLiClass($li_class)
+  public function setLiClass(string $li_class): void
   {
-    if (!is_string($li_class))
-    {
-      throw new \InvalidArgumentException("'li_class' must be a string");
-    }
-    else
-    {
-      $this->li_class = filter_var($li_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
+    $this->li_class = filter_var($li_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   }
 
   //
 
-  public function setAClass($a_class)
+  public function setAClass(string $a_class): void
   {
-    if (!is_string($a_class))
-    {
-      throw new \InvalidArgumentException("'a_class' must be a string");
-    }
-    else
-    {
-      $this->a_class = filter_var($a_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    }
+    $this->a_class = filter_var($a_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   }
 
   //
 
-  public function setCurrentPage($current_page)
+  public function setCurrentPage(int $current_page): void
   {
-    if (!is_int($current_page))
-    {
-      throw new \InvalidArgumentException("'current_page' must be an integer");
-    }
-    elseif ($current_page < 1)
+    if ($current_page < 1)
     {
       throw new \RangeException("'current_page' must be greater than zero");
     }
@@ -394,7 +350,7 @@ class SimplePaginate
 
   //
 
-  private function calculate()
+  private function calculate(): void
   {
     // set previous and next pages
 
@@ -414,42 +370,42 @@ class SimplePaginate
 
   //
 
-  private function setTotalPages()
+  private function setTotalPages(): void
   {
     $this->total_pages = ceil($this->total_records / $this->per_page);
   }
 
   //
 
-  private function setPreviousPage()
+  private function setPreviousPage(): void
   {
     $this->previous_page = $this->current_page - 1;
   }
 
   //
 
-  private function setNextPage()
+  private function setNextPage(): void
   {
     $this->next_page = $this->current_page + 1;
   }
 
   //
 
-  private function setDbOffset()
+  private function setDbOffset(): void
   {
     $this->db_offset = ($this->current_page - 1) * $this->per_page;
   }
 
   //
 
-  private function setOffset()
+  private function setOffset(): void
   {
     $this->offset = ($this->current_page - 1) * $this->per_page + 1;
   }
 
   //
 
-  private function setStart()
+  private function setStart(): void
   {
     if (($this->current_page - $this->page_links_offset) > 0)
     {
@@ -463,7 +419,7 @@ class SimplePaginate
 
   //
 
-  private function setEnd()
+  private function setEnd(): void
   {
     if (($this->current_page + $this->page_links_offset) < $this->total_pages)
     {
