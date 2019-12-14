@@ -279,7 +279,7 @@ class SimplePaginate
     }
     else
     {
-      $this->canonical_url = filter_var(strtok($canonical_url, '?'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $this->canonical_url = strtok($canonical_url, '?');
     }
   }
 
@@ -302,28 +302,28 @@ class SimplePaginate
   public function setUrlParams(array $url_params): void
   {
     unset($url_params['page']);
-    $this->url_params = filter_var('&' . http_build_query($url_params), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->url_params = '&' . http_build_query($url_params);
   }
 
   //
 
   public function setUlClass(string $ul_class): void
   {
-    $this->ul_class = filter_var($ul_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->ul_class = $ul_class;
   }
 
   //
 
   public function setLiClass(string $li_class): void
   {
-    $this->li_class = filter_var($li_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->li_class = $li_class;
   }
 
   //
 
   public function setAClass(string $a_class): void
   {
-    $this->a_class = filter_var($a_class, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $this->a_class = $a_class;
   }
 
   //
