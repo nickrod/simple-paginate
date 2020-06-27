@@ -170,16 +170,16 @@ class SimplePaginate
 
     if ($this->current_page == 1)
     {
-      $tags = "\t<link rel='next' href='" . $this->canonical_url . "?page=" . $this->next_page . "' />\n";
+      $tags = '<link rel="next" href="' . $this->canonical_url . '?page=' . $this->next_page . '" />';
     }
     elseif ($this->current_page == $this->total_pages)
     {
-      $tags = "\t<link rel='prev' href='" . $this->canonical_url . "?page=" . $this->previous_page . "' />\n";
+      $tags = '<link rel="prev" href="' . $this->canonical_url . '?page=' . $this->previous_page . '" />';
     }
     else
     {
-      $tags = "\t<link rel='prev' href='" . $this->canonical_url . "?page=" . $this->previous_page . "' />\n";
-      $tags .= "\t<link rel='next' href='" . $this->canonical_url . "?page=" . $this->next_page . "' />\n";
+      $tags = '<link rel="prev" href="' . $this->canonical_url . '?page=' . $this->previous_page . '" />';
+      $tags .= '<link rel="next" href="' . $this->canonical_url . '?page=' . $this->next_page . '" />';
     }
 
     //
@@ -197,14 +197,14 @@ class SimplePaginate
 
     if ($this->total_pages > 1)
     {
-      $links .= "<ul class='{$this->ul_class}'>\n";
+      $links .= '<ul class="' . $this->ul_class . '">';
 
       // show prev/first links
 
       if ($this->current_page > 1)
       {
-        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->previous_page . $this->url_params . "'>Previous</a></li>\n";
-        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=1" . $this->url_params . "'>First</a></li>\n";
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->previous_page . $this->url_params . '">Previous</a></li>';
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=1' . $this->url_params . '">First</a></li>';
       }
 
       // page links
@@ -213,11 +213,11 @@ class SimplePaginate
       {
         if ($i == $this->current_page)
         {
-          $links .= "\t<li class='{$this->li_class} active'><b>$i</b></li>\n";
+          $links .= '<li class="' . $this->li_class . ' active"><b>' . $i . '</b></li>';
         }
         else
         {
-          $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $i . $this->url_params . "'>" . $i . "</a></li>\n";
+          $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $i . $this->url_params . '">' . $i . '</a></li>';
         }
       }
 
@@ -225,13 +225,13 @@ class SimplePaginate
 
       if ($this->current_page < $this->total_pages)
       {
-        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->total_pages . $this->url_params . "'>Last</a></li>\n";
-        $links .= "\t<li class='{$this->li_class}'><a class='{$this->a_class}' href='" . $this->canonical_url . "?page=" . $this->next_page . $this->url_params . "'>Next</a></li>\n";
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->total_pages . $this->url_params . '">Last</a></li>';
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->next_page . $this->url_params . '">Next</a></li>';
       }
 
       //
 
-      $links .= "</ul>\n";
+      $links .= '</ul>';
     }
 
     //
@@ -245,7 +245,7 @@ class SimplePaginate
   {
     if ($total_records < 1)
     {
-      throw new \RangeException("'total_records' must be greater than zero");
+      throw new \RangeException('Total records must be greater than zero: ' . $total_records);
     }
     else
     {
@@ -260,7 +260,7 @@ class SimplePaginate
   {
     if ($per_page < 1)
     {
-      throw new \RangeException("'per_page' must be greater than zero");
+      throw new \RangeException('Per page must be greater than zero: ' . $per_page);
     }
     else
     {
@@ -275,7 +275,7 @@ class SimplePaginate
   {
     if (!filter_var($canonical_url, FILTER_VALIDATE_URL))
     {
-      throw new \InvalidArgumentException("'canonical_url' must be a valid url");
+      throw new \InvalidArgumentException('Canonical url is invalid: ' . $canonical_url);
     }
     else
     {
@@ -289,7 +289,7 @@ class SimplePaginate
   {
     if ($page_links_offset < 1 || $page_links_offset > 50)
     {
-      throw new \RangeException("'page_links_offset' must be greater than zero and less than 50");
+      throw new \RangeException('Page links offset must be greater than zero and less than 50: ' . $page_links_offset);
     }
     else
     {
@@ -332,11 +332,11 @@ class SimplePaginate
   {
     if ($current_page < 1)
     {
-      throw new \RangeException("'current_page' must be greater than zero");
+      throw new \RangeException('Current page must be greater than zero: ' . $current_page);
     }
     elseif ($current_page > $this->total_pages)
     {
-      throw new \RangeException("'current_page' cannot be greater than 'total_pages'");
+      throw new \RangeException('Current page cannot be greater than total_pages: ' . $current_page);
     }
     else
     {
