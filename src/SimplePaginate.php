@@ -168,11 +168,11 @@ class SimplePaginate
 
     //
 
-    if ($this->current_page == 1)
+    if ($this->current_page === 1)
     {
       $tags = '<link rel="next" href="' . $this->canonical_url . '?page=' . $this->next_page . '" />';
     }
-    elseif ($this->current_page == $this->total_pages)
+    elseif ($this->current_page === $this->total_pages)
     {
       $tags = '<link rel="prev" href="' . $this->canonical_url . '?page=' . $this->previous_page . '" />';
     }
