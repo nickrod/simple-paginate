@@ -203,8 +203,8 @@ class SimplePaginate
 
       if ($this->current_page > 1)
       {
-        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->previous_page . $this->url_params . '">Previous</a></li>&nbsp;';
-        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=1' . $this->url_params . '">First</a></li>&nbsp;';
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->previous_page . $this->url_params . '">Previous</a></li>';
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=1' . $this->url_params . '">First</a></li>';
       }
 
       // page links
@@ -217,7 +217,7 @@ class SimplePaginate
         }
         else
         {
-          $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $i . $this->url_params . '">' . $i . '</a></li>&nbsp;';
+          $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $i . $this->url_params . '">' . $i . '</a></li>';
         }
       }
 
@@ -225,7 +225,7 @@ class SimplePaginate
 
       if ($this->current_page < $this->total_pages)
       {
-        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->total_pages . $this->url_params . '">Last</a></li>&nbsp;';
+        $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->total_pages . $this->url_params . '">Last</a></li>';
         $links .= '<li class="' . $this->li_class . '"><a class="' . $this->a_class . '" href="' . $this->canonical_url . '?page=' . $this->next_page . $this->url_params . '">Next</a></li>';
       }
 
