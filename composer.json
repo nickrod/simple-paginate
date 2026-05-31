@@ -1,7 +1,7 @@
 {
-    "name": "nickrod/simplepaginate",
-    "description": "Simple pagination library",
-    "keywords": ["pager", "paging", "paginate", "pagination"],
+    "name": "nickrod/simpleapi",
+    "description": "Simple api library",
+    "keywords": ["language", "translate", "international"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -14,9 +14,9 @@
         "php": "^7.0"
     },
     "autoload": {
-        "psr-4": { "simplepaginate\\": "src/" }
+        "psr-4": { "simpleapi\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "simplepaginate\\tests\\": "tests/" }
+        "psr-4": { "simpleapi\\tests\\": "tests/" }
     }
 }
