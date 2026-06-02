@@ -2,7 +2,7 @@
 
 //
 
-use simpleauth\SimpleAuth;
+use simplepaginate\SimplePaginate;
 
 //
 

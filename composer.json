@@ -1,22 +1,22 @@
 {
-    "name": "nickrod/simpleapi",
-    "description": "Simple api library",
+    "name": "nickrod/simplepaginate",
+    "description": "Simple paginate library",
     "keywords": ["language", "translate", "international"],
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "nickrod",
-            "email": "nickrod@users.noreply.github.com"
+            "email": "5223922+nickrod@users.noreply.github.com"
         }
     ],
     "require": {
         "php": "^7.0"
     },
     "autoload": {
-        "psr-4": { "simpleapi\\": "src/" }
+        "psr-4": { "simplepaginate\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "simpleapi\\tests\\": "tests/" }
+        "psr-4": { "simplepaginate\\tests\\": "tests/" }
     }
 }
